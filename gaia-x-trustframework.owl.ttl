@@ -1,0 +1,114 @@
+@prefix gx: <https://w3id.org/gaia-x/development#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+@prefix odrl: <http://www.w3.org/ns/odrl/2/> .
+@prefix fibo-fnd-aap-agt: <https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/> .
+
+<https://w3id.org/gaia-x/development#>
+    a owl:Ontology ;
+    rdfs:label "Gaia-X Trust Framework & Service Characteristics Core Ontology"@en ;
+    rdfs:comment "Normative semantic model for Gaia-X participants, service offerings, sovereign resources, and compliance credentials."@en ;
+    owl:versionInfo "24.11-AAD" .
+
+### =================================================================
+### 1. Participant & Identity Classes (Legal Entities)
+### =================================================================
+
+gx:LegalPerson a owl:Class ;
+    rdfs:subClassOf foaf:Agent, fibo-fnd-aap-agt:AutonomousAgent ;
+    rdfs:label "Legal Person"@en ;
+    rdfs:comment "A legal entity (corporation, institution, SME) operating within a sovereign data space."@en .
+
+gx:LegalParticipant a owl:Class ;
+    rdfs:subClassOf gx:LegalPerson ;
+    rdfs:label "Legal Participant"@en ;
+    rdfs:comment "An active participant onboarded into the Gaia-X Trust Framework."@en .
+
+gx:NaturalPerson a owl:Class ;
+    rdfs:subClassOf foaf:Person ;
+    rdfs:label "Natural Person"@en ;
+    rdfs:comment "An individual acting on behalf of a participant or as an independent auditor."@en .
+
+### =================================================================
+### 2. Service & Resource Classes
+### =================================================================
+
+gx:ServiceOffering a owl:Class ;
+    rdfs:label "Service Offering"@en ;
+    rdfs:comment "A service provisioned in the federated catalog governed by Gaia-X terms."@en .
+
+gx:DataResource a owl:Class ;
+    rdfs:label "Data Resource"@en ;
+    rdfs:comment "A dataset or data asset exposed under sovereign policy governance."@en .
+
+gx:SoftwareResource a owl:Class ;
+    rdfs:subClassOf gx:ServiceOffering ;
+    rdfs:label "Software Resource"@en ;
+    rdfs:comment "A software node, connector, or processing algorithm (e.g. A&AD engine)."@en .
+
+### =================================================================
+### 3. Trust Framework, Compliance & Credential Classes
+### =================================================================
+
+gx:ComplianceCredential a owl:Class ;
+    rdfs:label "Compliance Credential"@en ;
+    rdfs:comment "A W3C Verifiable Credential issued by a Gaia-X Digital Clearing House attesting compliance."@en .
+
+gx:TrustAnchor a owl:Class ;
+    rdfs:label "Trust Anchor"@en ;
+    rdfs:comment "A recognized certification authority or notary anchoring public keys and schemas."@en .
+
+gx:Label a owl:Class ;
+    rdfs:label "Gaia-X Label"@en ;
+    rdfs:comment "Conformity level indicator: Level 1 (Global), Level 2 (European Sovereignty), Level 3 (Jurisdictional Immunity)."@en .
+
+### =================================================================
+### 4. Properties (Attributes and Relationships)
+### =================================================================
+
+gx:vatID a owl:DatatypeProperty ;
+    rdfs:domain gx:LegalPerson ;
+    rdfs:range xsd:string ;
+    rdfs:label "VAT Identifier"@en .
+
+gx:leiCode a owl:DatatypeProperty ;
+    rdfs:domain gx:LegalPerson ;
+    rdfs:range xsd:string ;
+    rdfs:label "Legal Entity Identifier (LEI)"@en .
+
+gx:registrationNumber a owl:DatatypeProperty ;
+    rdfs:domain gx:LegalPerson ;
+    rdfs:range xsd:string ;
+    rdfs:label "Commercial Registry Number"@en .
+
+gx:countrySubdivisionCode a owl:DatatypeProperty ;
+    rdfs:domain gx:LegalPerson ;
+    rdfs:range xsd:string ;
+    rdfs:label "ISO 3166-2 Country Subdivision Code"@en .
+
+gx:providedBy a owl:ObjectProperty ;
+    rdfs:domain gx:ServiceOffering ;
+    rdfs:range gx:LegalParticipant ;
+    rdfs:label "Provided By"@en .
+
+gx:producedBy a owl:ObjectProperty ;
+    rdfs:domain gx:DataResource ;
+    rdfs:range gx:LegalParticipant ;
+    rdfs:label "Produced By"@en .
+
+gx:policy a owl:ObjectProperty ;
+    rdfs:domain [ owl:unionOf (gx:ServiceOffering gx:DataResource) ] ;
+    rdfs:range odrl:Policy ;
+    rdfs:label "Usage Policy (ODRL)"@en .
+
+gx:hasLabel a owl:ObjectProperty ;
+    rdfs:domain gx:ComplianceCredential ;
+    rdfs:range gx:Label ;
+    rdfs:label "Has Label Level"@en .
+

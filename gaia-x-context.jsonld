@@ -1,0 +1,53 @@
+{
+  "@context": {
+    "gx": "https://w3id.org/gaia-x/development#",
+    "sh": "http://www.w3.org/ns/shacl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "vcard": "http://www.w3.org/2006/vcard/ns#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/FND/AgentsAndPeople/Agents/",
+    
+    "LegalPerson": "gx:LegalPerson",
+    "LegalParticipant": "gx:LegalParticipant",
+    "NaturalPerson": "gx:NaturalPerson",
+    "ServiceOffering": "gx:ServiceOffering",
+    "DataResource": "gx:DataResource",
+    "ComplianceCredential": "gx:ComplianceCredential",
+    "Label": "gx:Label",
+    
+    "registrationNumber": {
+      "@id": "gx:registrationNumber",
+      "@type": "xsd:string"
+    },
+    "vatID": {
+      "@id": "gx:vatID",
+      "@type": "xsd:string"
+    },
+    "leiCode": {
+      "@id": "gx:leiCode",
+      "@type": "xsd:string"
+    },
+    "countrySubdivisionCode": {
+      "@id": "gx:countrySubdivisionCode",
+      "@type": "xsd:string"
+    },
+    "providedBy": {
+      "@id": "gx:providedBy",
+      "@type": "@id"
+    },
+    "producedBy": {
+      "@id": "gx:producedBy",
+      "@type": "@id"
+    },
+    "policy": {
+      "@id": "gx:policy",
+      "@type": "@id"
+    },
+    "hasLabel": {
+      "@id": "gx:hasLabel",
+      "@type": "@id"
+    }
+  }
+}
+

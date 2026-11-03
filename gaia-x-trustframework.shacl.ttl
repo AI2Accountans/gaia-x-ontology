@@ -1,0 +1,60 @@
+@prefix gx: <https://w3id.org/gaia-x/development#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+
+### =================================================================
+### 1. Shape: LegalPersonShape (Validación de Entidades Legales)
+### =================================================================
+
+gx:LegalPersonShape a sh:NodeShape ;
+    sh:targetClass gx:LegalPerson, gx:LegalParticipant ;
+    sh:property [
+        sh:path gx:registrationNumber ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Every LegalPerson must possess exactly one commercial registration number."@en ;
+    ] ;
+    sh:property [
+        sh:path gx:countrySubdivisionCode ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:pattern "^[A-Z]{2}-[A-Z0-9]{1,3}$" ;
+        sh:message "countrySubdivisionCode must follow ISO 3166-2 (e.g. CO-DC, DE-BY, US-FL)."@en ;
+    ] .
+
+### =================================================================
+### 2. Shape: ServiceOfferingShape (Validación de Servicios)
+### =================================================================
+
+gx:ServiceOfferingShape a sh:NodeShape ;
+    sh:targetClass gx:ServiceOffering ;
+    sh:property [
+        sh:path gx:providedBy ;
+        sh:class gx:LegalParticipant ;
+        sh:minCount 1 ;
+        sh:message "A ServiceOffering must reference at least one verified LegalParticipant provider."@en ;
+    ] ;
+    sh:property [
+        sh:path gx:policy ;
+        sh:minCount 1 ;
+        sh:message "Every ServiceOffering must explicitly declare an ODRL usage policy."@en ;
+    ] .
+
+### =================================================================
+### 3. Shape: ComplianceCredentialShape (Validación de Credenciales)
+### =================================================================
+
+gx:ComplianceCredentialShape a sh:NodeShape ;
+    sh:targetClass gx:ComplianceCredential ;
+    sh:property [
+        sh:path gx:hasLabel ;
+        sh:class gx:Label ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "A ComplianceCredential must specify exactly one Gaia-X Label level."@en ;
+    ] .
+
